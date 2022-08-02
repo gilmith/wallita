@@ -89,7 +89,55 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/search'          
+                  $ref: '#/components/schemas/search'   
+  /user/${id}:
+   get:
+      tags:
+        - user details
+      summary: busqueda del usuario
+      description: Busqueda por id de usuario
+      operationId: users
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario a buscar
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'   
+  /user/${id}/items:
+   get:
+      tags:
+        - productos a la venta por usuario
+      summary: obtener todos los productos del usuario
+      description: Busqueda por id de usuario y sus productos
+      operationId: userItem
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario a buscar
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'   
  
              
 components:
@@ -248,19 +296,65 @@ components:
                       type: number
                     longitude:
                       type: number
-                
-            
-
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+        micro_name: 
+          type: string
+        type:
+          type: string
+        image:
+          type: object
+          properties:
+            id: 
+              type: string
+            original_width:
+              type: number
+            original_height:
+              type: number
+            averrage_hex_box:
+              type: string
+            urls_by_size:
+              type: object
+              properties:
+                small: 
+                  type: string
+                xsmall:
+                  type: string
+                original:
+                  type: string
+                large:
+                  type: string
+                xlarge:
+                  type: string
+                medium:
+                  type: string
+        location:
+          type: object
+          properties:
+            approximated_latitude:
+              type: number
+            approximated_longitude:
+              type: number
+            city:
+              type: string
+            zip:
+              type: string
+            country_code:
+              type: string
+            approxRadius:
+              type: string
+            approximated_location: 
+              type: boolean
+        gender:
+          type: string
+        web_slug:
+          type: string
+        url_share:
+          type: string
+        register_date:
+          type: string
+        featured:
+          type: boolean
