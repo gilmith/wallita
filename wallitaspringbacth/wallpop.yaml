@@ -1,0 +1,266 @@
+openapi: 3.0.3
+info:
+  title: wallapop search api
+  description: |-
+    API de consultas de wallapop, pillado por ingenieria inversa
+  contact:
+    email: gilmith@gmail.com
+  license:
+    name: MIT
+  version: 1.0.0
+servers:
+  - url: https://api.wallapop.com/api/v3
+paths:
+  /search:
+    get:
+      tags:
+        - search
+      summary: search productos
+      description: Busqueda parametrizada en un get
+      operationId: search
+      parameters:
+        - name: keywords
+          in: query
+          description: palabras claves a buscar
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: start
+          in: query
+          description: pagina de busqueda
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 0
+        - name: order_by
+          in: query
+          description: filtro de busqueda de distacia precio etc. Si eliges newest hay que poner una fecha de inicio ver 
+          required: false
+          explode: true
+          schema:
+            type: string
+            enum:
+              - "closed"
+              - "price_high_to_low"
+              - "price_low_to_high"
+              - "most_relevance"
+              - "newest"
+            default: "closed"
+        - name: pagination_date
+          in: query
+          description: dos meses menos la fecha actual con hora
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: condition
+          in: query
+          description: condiciones del producto
+          required: false
+          explode: true
+          schema:
+            type: string
+            enum:
+              - "new"
+              - "as_good_as_new"
+              - "good"
+              - "fair"
+        - name: longitude
+          in: query
+          description: longitud de la ubicacion
+          required: false
+          explode: true
+          schema:
+            type: number
+        - name: latitude
+          in: query
+          description: latitud de la ubicacion
+          required: false
+          explode: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/search'          
+ 
+             
+components:
+  schemas:
+    search:
+      type: object
+      properties:
+        search_objects:
+          type: array
+          items:
+            properties:
+                id: 
+                  type: string
+                title: 
+                  type: string
+                description: 
+                  type: string
+                distance: 
+                  type: number
+                images:
+                  type: array
+                  items:
+                    properties:
+                      original:
+                        type: string
+                      xsmall:
+                        type: string
+                      small:
+                        type: string
+                      large:
+                        type: string
+                      medium: 
+                        type: string
+                      xlarge:
+                        type: string
+                      original_width:
+                        type: string
+                      original_height:
+                        type: string
+                user: 
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    micro_name:
+                      type: string
+                    online:
+                      type: boolean
+                    kind: 
+                      type: string
+                    image:
+                      type: object
+                      properties:
+                        original:
+                          type: string
+                        xsmall:
+                          type: string
+                        small:
+                          type: string
+                        medium:
+                          type: string
+                        large:
+                          type: string
+                        xlarge:
+                          type: string
+                        original_width:
+                          type: number
+                        original_height:
+                          type: number
+                flags:
+                      type: object
+                      properties:
+                        pending:
+                          type: boolean
+                        sold:
+                          type: boolean
+                        reserved:
+                          type: boolean
+                        banned:
+                          type: boolean
+                        expired: 
+                          type: boolean
+                        onhold:
+                          type: boolean
+                visibility_flags:
+                    type: object
+                    properties:
+                      bumped:
+                        type: boolean
+                      highlighted:
+                        type: boolean
+                      urgent:
+                        type: boolean
+                      country_bumped:
+                        type: boolean
+                      boosted:
+                        type: boolean
+                price:
+                  type: number
+                currency:
+                  type: string
+                free_shipping:
+                  type: boolean
+                web_slug:
+                  type: string
+                category_id:
+                  type: number
+                shipping:
+                  type: object
+                  properties:
+                    item_is_shippable: 
+                      type: boolean
+                    user_allows_shipping:
+                      type: boolean
+                supports_shipping:
+                  type: boolean
+                shipping_allowed:
+                  type: boolean
+                seller_id:
+                  type: string
+                favorited: 
+                  type: boolean
+                modification_date:
+                  type: number
+                location:
+                  type: object
+                  properties:
+                    city:
+                      type: string
+                    postal_code:
+                      type: string
+                    country_code:
+                      type: string
+                from:
+                  type: number
+                to: 
+                  type: number
+                distance_order:
+                  type: boolean
+                keywords:
+                  type: string
+                order:
+                  type: string
+                  enum:
+                    - "closed"
+                    - "price_high_to_low"
+                    - "price_low_to_high"
+                    - "most_relevance"
+                    - "newest"
+                bubble: 
+                  type: string
+                search_point:
+                  type: object
+                  properties:
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+                
+            
+
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
