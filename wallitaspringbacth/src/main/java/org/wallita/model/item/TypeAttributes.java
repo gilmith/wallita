@@ -1,6 +1,5 @@
 package org.wallita.model.item;
 
-import org.wallita.model.user.item.UpToKg;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

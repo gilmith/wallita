@@ -137,7 +137,31 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/user'   
+                  $ref: '#/components/schemas/userItem'
+  /items/${id}:
+    get:
+      tags:
+        - detalle de producto
+      summary: detalles del producto
+      description: devuelve los datelles del producto, fotos etc
+      operationId: item
+      parameters:
+        - name: id
+          in: path
+          description: id del producto a obtener los detalles
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/item'
  
              
 components:
@@ -149,34 +173,35 @@ components:
           type: array
           items:
             properties:
-                id: 
-                  type: string
-                title: 
-                  type: string
-                description: 
-                  type: string
-                distance: 
-                  type: number
-                images:
-                  type: array
-                  items:
-                    properties:
-                      original:
-                        type: string
-                      xsmall:
-                        type: string
-                      small:
-                        type: string
-                      large:
-                        type: string
-                      medium: 
-                        type: string
-                      xlarge:
-                        type: string
-                      original_width:
-                        type: string
-                      original_height:
-                        type: string
+              id: 
+                type: string
+              title: 
+                type: string
+              description: 
+                type: string
+              distance: 
+                type: number
+              images:
+                type: array
+                items:
+                  properties:
+                    original:
+                      type: string
+                    xsmall:
+                      type: string
+                    small:
+                      type: string
+                    large:
+                      type: string
+                    medium: 
+                      type: string
+                    xlarge:
+                      type: string
+                    original_width:
+                      type: string
+                    original_height:
+                      type: string
+                
                 user: 
                   type: object
                   properties:
@@ -358,3 +383,196 @@ components:
           type: string
         featured:
           type: boolean
+    userItem:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              description:
+                type: string
+              category_id:
+                type: string
+              images:
+                type: array
+                items:
+                  properties:
+                    id: 
+                      type: string
+                    average_color:
+                      type: string
+                    urls:
+                      type: object
+                      properties:
+                        small:
+                          type: string
+                        medium:
+                          type: string
+                        big:
+                          type: string
+              price:
+                type: object
+                properties:
+                  aumount: 
+                    type: number
+                  currency:
+                    type: number
+              type_attributes:
+                type: object
+                properties:
+                  condition:
+                    type: object
+                    properties:
+                      value:
+                        type: string 
+                      title:
+                        type: string
+                      text:
+                        type: string
+                      icon_text:
+                        type: string
+                  up_to_kg:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                      title:
+                        type: string
+                      text:
+                        type: string
+                      icon_text:
+                        type: string
+              shipping:
+                type: object
+                properties:
+                  item_is_shippable:
+                    type: boolean
+                  user_allows_shipping:
+                    type: boolean
+        meta:
+          type: object
+          properties:
+            next:
+              type: string
+    item:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: object
+          properties:
+            original: 
+              type: string
+        description:
+          type: object
+          properties:
+            original:
+              type: string
+        taxonomy:
+          type: array
+          items:
+            properties:
+              id:
+                type: number
+              name:
+                type: string
+              icon:
+                type: string
+        type:
+          type: string
+        user:
+          type: object
+          properties:
+            id: 
+              type: string
+        slug:
+          type: string
+        share_url:
+          type: string
+        modified_date:
+          type: string
+        images:
+          type: array
+          items:
+            properties:
+              id: 
+                type: string
+              average_color:
+                type: string
+              urls:
+                type: object
+                properties:
+                  small:
+                    type: string
+                  medium:
+                    type: string
+                  big:
+                    type: string
+        price:
+          type: object
+          properties:
+            aumount: 
+              type: number
+            currency:
+              type: number
+            type_attributes:
+              type: object
+              properties:
+                condition:
+                  type: object
+                  properties:
+                    value:
+                      type: string 
+                    title:
+                      type: string
+                    text:
+                      type: string
+                    icon_text:
+                      type: string
+                up_to_kg:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                    title:
+                      type: string
+                    text:
+                      type: string
+                    icon_text:
+                      type: string
+            shipping:
+              type: object
+              properties:
+                item_is_shippable:
+                  type: boolean
+                user_allows_shipping:
+                  type: boolean
+            supports_shipping:
+              type: object
+              properties:
+                flag:
+                  type: boolean
+            hashtags:
+              type: object
+              properties:
+                values:
+                  type: array
+                  items:
+                  properties:
+                  
+
+              
+                  
+                
+        
+        
+                
+                        
+                
+      

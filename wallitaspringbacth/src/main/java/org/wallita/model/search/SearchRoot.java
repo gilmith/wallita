@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Root{
+public class SearchRoot{
     public ArrayList<SearchObject> search_objects;
     public int from; 
     public int to;
